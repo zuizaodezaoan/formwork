@@ -13,7 +13,7 @@ import (
 var DB *gorm.DB
 var err error
 
-func init() {
+func InitMysql() {
 	dsn := "root:root@tcp(127.0.0.1:3306)/area?charset=utf8mb4&parseTime=True&loc=Local"
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -29,6 +29,7 @@ func init() {
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
 	})
+
 }
 
 func Transaction(txc func(tx *gorm.DB) error) {

@@ -6,6 +6,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -23,8 +24,14 @@ func RegisterGrpc(host string, port int, register func(c *grpc.Server)) error {
 		return err
 	}
 
+	// 创建基于tls的凭证
+	creds, err := credentials.NewServerTLSFromFile("./secret/client_ca_cert.pem", "./client_ca_key.pem")
+	if err != nil {
+		log.Fatalf("failed to create credentials: %v", err)
+	}
+
 	// 创建一个新的 gRPC 服务器
-	n := grpc.NewServer()
+	n := grpc.NewServer(grpc.Creds(creds))
 
 	// 注册服务器的反射服务，便于调试
 	reflection.Register(n)

@@ -27,7 +27,8 @@ func RegisterGrpc(host string, port int, register func(c *grpc.Server), cert, ke
 	// 创建基于tls的凭证
 	creds, err := credentials.NewServerTLSFromFile(cert, key)
 	if err != nil {
-		log.Fatalf("创建凭据失败: %v", err)
+		log.Printf("创建凭据失败: %v", err.Error())
+		return err
 	}
 
 	// 创建一个新的 gRPC 服务器

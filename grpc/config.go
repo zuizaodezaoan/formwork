@@ -15,7 +15,7 @@ import (
 // 参数 port 是服务器端口号
 // 参数 register 是一个函数，用于注册 gRPC 服务
 // 如果成功启动服务器，则函数返回 nil；否则返回非 nil 错误
-func RegisterGrpc(host string, port int, register func(c *grpc.Server)) error {
+func RegisterGrpc(host string, port int, register func(c *grpc.Server), cert, key string) error {
 	// 监听指定的主机和端口
 	lister, err := net.Listen("tcp", fmt.Sprintf("%s:%d", host, port))
 	if err != nil {
@@ -25,7 +25,7 @@ func RegisterGrpc(host string, port int, register func(c *grpc.Server)) error {
 	}
 
 	// 创建基于tls的凭证
-	creds, err := credentials.NewServerTLSFromFile("./secret/client_ca_cert.pem", "./secret/client_ca_key.pem")
+	creds, err := credentials.NewServerTLSFromFile(cert, key)
 	if err != nil {
 		log.Fatalf("创建凭据失败: %v", err)
 	}

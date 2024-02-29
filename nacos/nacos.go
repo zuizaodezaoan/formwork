@@ -22,7 +22,7 @@ func InitConfig() {
 		return
 	}
 
-	err = v.UnmarshalKey("nacos.yaml", &config.Nacoss)
+	err = v.UnmarshalKey("nacos", &config.Nacoss)
 	fmt.Println()
 	if err != nil {
 		log.Println("反序列化失败", err.Error())

@@ -17,12 +17,14 @@ func InitConfig() {
 	v.SetConfigFile("nacos.yaml")
 	err := v.ReadInConfig()
 	if err != nil {
-		log.Println("读取配置文件失败")
+		log.Println("读取配置文件失败", err.Error())
+		return
 	}
 
 	err = v.UnmarshalKey("nacos", &config.Nacoss)
 	if err != nil {
-		log.Println("反序列化失败")
+		log.Println("反序列化失败", err.Error())
+		return
 	}
 
 	NacosConfig()

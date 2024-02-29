@@ -14,14 +14,14 @@ import (
 
 func InitConfig() {
 	v := viper.New()
-	v.SetConfigFile("./formwork/nacos/nacos.yaml")
+	v.SetConfigFile("../formwork/nacos/nacos.yaml")
 	err := v.ReadInConfig()
 	if err != nil {
 		log.Println("读取配置文件失败", err.Error())
 		return
 	}
 
-	err = v.UnmarshalKey("nacos", &config.Nacoss)
+	err = v.UnmarshalKey("nacos.yaml", &config.Nacoss)
 	if err != nil {
 		log.Println("反序列化失败", err.Error())
 		return

@@ -1,29 +1,46 @@
 package nacos
 
 import (
+	"encoding/json"
+	"log"
+
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"github.com/spf13/viper"
+
+	"github.com/zuizaodezaoan/formwork/config"
 )
 
 func InitConfig() {
 	v := viper.New()
+	v.SetConfigFile("nacos.yaml")
+	err := v.ReadInConfig()
+	if err != nil {
+		log.Println("读取配置文件失败")
+	}
+
+	err = v.UnmarshalKey("nacos", &config.Nacoss)
+	if err != nil {
+		log.Println("反序列化失败")
+	}
+
+	NacosConfig()
 }
 
 func NacosConfig() {
 	clientConfig := constant.ClientConfig{
-		NamespaceId:         "e525eafa-f7d7-4029-83d9-008937f9d468", //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
+		NamespaceId:         config.Nacoss.NamespaceId, //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
 		NotLoadCacheAtStart: true,
-		LogDir:              "/tmp/nacos/log",
-		CacheDir:            "/tmp/nacos/cache",
-		LogLevel:            "debug",
+		LogDir:              config.Nacoss.LogDir,
+		CacheDir:            config.Nacoss.CacheDir,
+		LogLevel:            config.Nacoss.LogLevel,
 	}
 
 	serverConfigs := []constant.ServerConfig{
 		{
-			IpAddr: "console1.nacos.io",
-			Port:   80,
+			IpAddr: config.Nacoss.Host,
+			Port:   uint64(config.Nacoss.Port),
 		},
 	}
 
@@ -32,8 +49,12 @@ func NacosConfig() {
 		"clientConfig":  clientConfig,
 	})
 
-	content, err := configClient.GetConfig(vo.ConfigParam{
-		DataId: "dataId",
-		Group:  "group"})
+	content, _ := configClient.GetConfig(vo.ConfigParam{
+		DataId: config.Nacoss.DataId,
+		Group:  config.Nacoss.Group})
 
+	err := json.Unmarshal([]byte(content), &config.Nacoss)
+	if err != nil {
+		return
+	}
 }

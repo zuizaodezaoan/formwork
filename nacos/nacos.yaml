@@ -1,0 +1,9 @@
+nacos:
+  Host: "127.0.0.1"
+  Port: 8848
+  NamespaceId: "785c73e1-7df9-4ed4-ae03-d72b121ebe46"
+  LogDir: "/tmp/nacos/log"
+  CacheDir: "/tmp/nacos/cache"
+  LogLevel: "debug"
+  DataId: "user_srv.g5"
+  Group: "json"

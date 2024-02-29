@@ -1,5 +1,7 @@
 package config
 
+var Nacoss Nacos
+
 type Nacos struct {
 	Host        string `mapstructure:"host" json:"host"`
 	Port        int    `mapstructure:"port" json:"port"`
@@ -8,7 +10,7 @@ type Nacos struct {
 	CacheDir    string `mapstructure:"cache_dir" json:"cache_dir"`
 	LogLevel    string `mapstructure:"log_level" json:"log_level"`
 	DataId      string `mapstructure:"data_id" json:"data_id"`
-	Group       string `mapstructure:"group" json:"group"`
+	Group       string ` :"group" json:"group"`
 }
 
 type Mysql struct {

@@ -10,7 +10,7 @@ type Nacos struct {
 	CacheDir    string `mapstructure:"cache_dir" json:"cache_dir"`
 	LogLevel    string `mapstructure:"log_level" json:"log_level"`
 	DataId      string `mapstructure:"data_id" json:"data_id"`
-	Group       string ` :"group" json:"group"`
+	Group       string `mapstructure:"group" json:"group"`
 }
 
 var Mysqls Mysql

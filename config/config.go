@@ -13,6 +13,8 @@ type Nacos struct {
 	Group       string ` :"group" json:"group"`
 }
 
+var Mysqls Mysql
+
 type Mysql struct {
 	Number   string `mapstructure:"number" json:"number"`
 	Password string `mapstructure:"password" json:"password"`

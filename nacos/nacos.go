@@ -2,6 +2,7 @@ package nacos
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/nacos-group/nacos-sdk-go/clients"
@@ -22,6 +23,7 @@ func InitConfig() {
 	}
 
 	err = v.UnmarshalKey("nacos.yaml", &config.Nacoss)
+	fmt.Println()
 	if err != nil {
 		log.Println("反序列化失败", err.Error())
 		return

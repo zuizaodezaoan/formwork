@@ -15,7 +15,7 @@ import (
 
 func InitConfig() {
 	v := viper.New()
-	v.SetConfigFile("../formwork/nacos/nacos.yaml")
+	v.SetConfigFile("./formwork/nacos/nacos.yaml")
 	err := v.ReadInConfig()
 	if err != nil {
 		log.Println("读取配置文件失败", err.Error())

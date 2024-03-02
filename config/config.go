@@ -1,24 +1,30 @@
 package config
 
-var Nacoss Nacos
+var Usersrv SrvConfig
 
-type Nacos struct {
-	Host        string `mapstructure:"host" json:"host"`
-	Port        int    `mapstructure:"port" json:"port"`
-	NamespaceId string `mapstructure:"namespace_id" json:"namespace_id"`
-	LogDir      string `mapstructure:"log_dir" json:"log_dir"`
-	CacheDir    string `mapstructure:"cache_dir" json:"cache_dir"`
-	LogLevel    string `mapstructure:"log_level" json:"log_level"`
-	DataId      string `mapstructure:"data_id" json:"data_id"`
-	Group       string `mapstructure:"group" json:"group"`
+type SrvConfig struct {
+	UserName string `json:"user_name"`
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	Mysql    Mysqls `json:"mysql"`
+	Nacos    Nacoss `json:"Nacos"`
 }
 
-var Mysqls Mysql
+type Nacoss struct {
+	Host        string `json:"host"`
+	Port        int    `json:"port"`
+	NamespaceId string `json:"namespaceId"`
+	LogDir      string `json:"logDir"`
+	CacheDir    string `json:"cacheDir"`
+	LogLevel    string `json:"logLevel"`
+	DataId      string `json:"dataId"`
+	Group       string `json:"group" mapstructure:"group" yaml:"group"`
+}
 
-type Mysql struct {
-	Number   string `mapstructure:"number" json:"number"`
-	Password string `mapstructure:"password" json:"password"`
-	Host     string `mapstructure:"host" json:"host"`
-	Port     int    `mapstructure:"port" json:"port"`
-	DbName   string `mapstructure:"db_name" json:"db_name"`
+type Mysqls struct {
+	Number   string `json:"number"`
+	Password string `json:"password"`
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	DbName   string `json:"db_name"`
 }

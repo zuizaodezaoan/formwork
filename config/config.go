@@ -3,11 +3,13 @@ package config
 var Usersrv SrvConfig
 
 type SrvConfig struct {
-	UserName string `json:"user_name"`
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
-	Mysql    Mysqls `json:"mysql"`
-	Nacos    Nacoss `json:"Nacos"`
+	UserName string   `json:"user_name"`
+	Host     string   `json:"host"`
+	Port     int      `json:"port"`
+	Tags     []string `json:"tags"`
+	Mysql    Mysqls   `json:"mysql"`
+	Nacos    Nacoss   `json:"Nacos"`
+	Consul   Consuls  `json:"consul"`
 }
 
 type Nacoss struct {
@@ -27,4 +29,9 @@ type Mysqls struct {
 	Host     string `json:"host"`
 	Port     int    `json:"port"`
 	DbName   string `json:"db_name"`
+}
+
+type Consuls struct {
+	Host string `json:"host"`
+	Port int    `json:"port"`
 }

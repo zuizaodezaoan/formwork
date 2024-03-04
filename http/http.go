@@ -12,7 +12,7 @@ type Response struct {
 	Data interface{}
 }
 
-func Res(c *gin.Context, code int64, data interface{}, msg string) error {
+func Res(c *gin.Context, code int64, data interface{}, msg string) {
 	httpCode := http.StatusOK
 	if code != http.StatusOK {
 		httpCode = int(code)
@@ -23,5 +23,5 @@ func Res(c *gin.Context, code int64, data interface{}, msg string) error {
 		Msg:  msg,
 		Data: data,
 	})
-	return nil
+	return
 }

@@ -32,6 +32,7 @@ func RegisterGrpc(host string, port int, register func(c *grpc.Server), cert, ke
 	//
 	//// 创建一个新的 gRPC 服务器
 	//n := grpc.NewServer(grpc.Creds(creds))
+
 	n := grpc.NewServer()
 	// 注册服务器的反射服务，便于调试
 	reflection.Register(n)

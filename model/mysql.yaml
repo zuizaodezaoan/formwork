@@ -1,4 +1,4 @@
-user_name: user
+user_name: users
 mysql:
   number: root
   password: root

@@ -8,6 +8,7 @@ type SrvConfig struct {
 	Port     int      `json:"port"`
 	Tags     []string `json:"tags"`
 	Mysql    Mysqls   `json:"mysql"`
+	Redis    Rediss   `json:"redis"`
 	Nacos    Nacoss   `json:"Nacos"`
 	Consul   Consuls  `json:"consul"`
 }
@@ -29,6 +30,11 @@ type Mysqls struct {
 	Host     string `json:"host"`
 	Port     int    `json:"port"`
 	DbName   string `json:"db_name"`
+}
+
+type Rediss struct {
+	Host string `json:"host"`
+	Port int    `json:"port"`
 }
 
 type Consuls struct {

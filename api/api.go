@@ -9,6 +9,9 @@ func Init(serverName string, str ...string) error {
 	var err error
 	err = nacos.InitConfig()
 	err = nacos.InitNacos()
+
+	nacos.Enroll()
+
 	if err != nil {
 		return err
 	}
@@ -16,6 +19,8 @@ func Init(serverName string, str ...string) error {
 		switch val {
 		case "mysql":
 			err = model.InitMysql(serverName)
+		case "redis":
+			err = model.InitRedis(serverName)
 		}
 	}
 	return err

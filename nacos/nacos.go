@@ -68,7 +68,6 @@ func InitNacos() error {
 }
 
 func NacosConfig(serverName string) (string, error) {
-
 	content, err := ConfigClient.GetConfig(vo.ConfigParam{
 		DataId: serverName,
 		Group:  config.Usersrv.Nacos.Group})

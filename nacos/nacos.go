@@ -44,7 +44,7 @@ func InitNacos() error {
 
 	serverConfigs := []constant.ServerConfig{
 		{
-			IpAddr: "0.0.0.0",
+			IpAddr: "127.0.0.1",
 			Port:   uint64(8848),
 		},
 	}

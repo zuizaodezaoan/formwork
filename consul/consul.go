@@ -3,14 +3,12 @@ package consul
 import (
 	"context"
 	"fmt"
-	"strconv"
 
 	"github.com/hashicorp/consul/api"
 	uuid "github.com/satori/go.uuid"
 	"go.uber.org/zap"
 
 	config2 "github.com/zuizaodezaoan/formwork/config"
-	"github.com/zuizaodezaoan/formwork/model"
 )
 
 var (
@@ -33,25 +31,25 @@ func InitRegisterServer(ctx context.Context, serverName string) (string, error) 
 		zap.S().Panic(err.Error())
 	}
 
-	right, err := model.GetByRight(ctx, serverName, "没有索引")
-	if err != nil {
-		return "", err
-	}
-
-	if right {
-		key, err := model.GetByKey(ctx, serverName, "没有索引")
-		if err != nil {
-			return "", err
-		}
-
-		index, _ := strconv.Atoi(key)
-
-		err = model.GetMessage(ctx, serverName, "没有索引", index+1, 0)
-		if err != nil {
-			return "", err
-		}
-
-	}
+	//right, err := model.GetByRight(ctx, serverName, "没有索引")
+	//if err != nil {
+	//	return "", err
+	//}
+	//
+	//if right {
+	//	key, err := model.GetByKey(ctx, serverName, "没有索引")
+	//	if err != nil {
+	//		return "", err
+	//	}
+	//
+	//	index, _ := strconv.Atoi(key)
+	//
+	//	err = model.GetMessage(ctx, serverName, "没有索引", index+1, 0)
+	//	if err != nil {
+	//		return "", err
+	//	}
+	//
+	//}
 
 	check := &api.AgentServiceCheck{
 		GRPC:                           fmt.Sprintf("%s:%d", config2.Usersrv.Host, config2.Usersrv.Port),

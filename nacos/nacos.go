@@ -2,55 +2,50 @@ package nacos
 
 import (
 	"errors"
-	"fmt"
-	"log"
 
 	"github.com/nacos-group/nacos-sdk-go/v2/clients"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
-	"github.com/spf13/viper"
-
-	"github.com/zuizaodezaoan/formwork/config"
 )
 
 var ConfigClient config_client.IConfigClient
 
-func InitConfig() error {
-	// 初始化Viper
-	viper.SetConfigName("nacos")                                   // 配置文件名（不带扩展名）
-	viper.SetConfigType("yaml")                                    // 配置文件类型
-	viper.AddConfigPath("/Users/chenhaoqi/go/src/formwork/nacos/") // 配置文件路径
-
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Println("读取配置文件失败", err.Error())
-		return errors.New("读取配置文件失败" + err.Error())
-	}
-
-	err = viper.UnmarshalKey("nacos", &config.Usersrv.Nacos)
-	fmt.Println("配置信息：*********************", config.Usersrv)
-	if err != nil {
-		log.Println("反序列化失败", err.Error())
-		return errors.New("反序列化失败" + err.Error())
-
-	}
-	return nil
-}
+//func InitConfig() error {
+//	// 初始化Viper
+//	viper.SetConfigName("nacos")                                   // 配置文件名（不带扩展名）
+//	viper.SetConfigType("yaml")                                    // 配置文件类型
+//	viper.AddConfigPath("/Users/chenhaoqi/go/src/formwork/nacos/") // 配置文件路径
+//
+//	err := viper.ReadInConfig()
+//	if err != nil {
+//		log.Println("读取配置文件失败", err.Error())
+//		return errors.New("读取配置文件失败" + err.Error())
+//	}
+//
+//	err = viper.UnmarshalKey("nacos", &config.Usersrv.Nacos)
+//	fmt.Println("配置信息：*********************", config.Usersrv)
+//	if err != nil {
+//		log.Println("反序列化失败", err.Error())
+//		return errors.New("反序列化失败" + err.Error())
+//
+//	}
+//	return nil
+//}
 
 func InitNacos() error {
 	clientConfig := constant.ClientConfig{
-		NamespaceId:         config.Usersrv.Nacos.NamespaceId, //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
+		NamespaceId:         "785c73e1-7df9-4ed4-ae03-d72b121ebe46", //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
 		NotLoadCacheAtStart: true,
-		LogDir:              config.Usersrv.Nacos.LogDir,
-		CacheDir:            config.Usersrv.Nacos.CacheDir,
-		LogLevel:            config.Usersrv.Nacos.LogLevel,
+		LogDir:              "/tmp/nacos/log",
+		CacheDir:            "/tmp/nacos/cache",
+		LogLevel:            "debug",
 	}
 
 	serverConfigs := []constant.ServerConfig{
 		{
-			IpAddr: config.Usersrv.Nacos.Host,
-			Port:   uint64(config.Usersrv.Nacos.Port),
+			IpAddr: "0.0.0.0",
+			Port:   uint64(8848),
 		},
 	}
 
@@ -68,8 +63,8 @@ func InitNacos() error {
 
 func NacosConfig(serverName string) (string, error) {
 	content, err := ConfigClient.GetConfig(vo.ConfigParam{
-		DataId: serverName,
-		Group:  config.Usersrv.Nacos.Group})
+		DataId: "user_srv.g5",
+		Group:  "json"})
 	if err != nil {
 		return "", err
 	}

@@ -1,15 +1,13 @@
 package api
 
 import (
-	"github.com/redis/go-redis/v9"
-
 	"github.com/zuizaodezaoan/formwork/model"
 	"github.com/zuizaodezaoan/formwork/nacos"
 )
 
 func Init(serverName string, str ...string) error {
 	var err error
-	err = nacos.InitConfig()
+	//err = nacos.InitConfig()
 	err = nacos.InitNacos()
 
 	nacos.Enroll()
@@ -22,9 +20,7 @@ func Init(serverName string, str ...string) error {
 		case "mysql":
 			err = model.InitMysql(serverName)
 		case "redis":
-			err = model.InitRedis(serverName, func(cli *redis.Client) error {
-				return err
-			})
+			err = model.InitRedis(serverName)
 		}
 	}
 	return err

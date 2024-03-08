@@ -15,7 +15,7 @@ var err error
 func Enroll() {
 	//create ServerConfig
 	sc := []constant.ServerConfig{
-		*constant.NewServerConfig("127.0.0.1", 8848, constant.WithContextPath("/nacos")),
+		*constant.NewServerConfig("0.0.0.0", 8848, constant.WithContextPath("/nacos")),
 	}
 
 	//create ClientConfig

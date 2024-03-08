@@ -1,9 +1,27 @@
 package main
 
-import "github.com/zuizaodezaoan/formwork/nacos"
+import (
+	"log"
+
+	"github.com/zuizaodezaoan/formwork/rabbitmq"
+)
+
+var err error
 
 func main() {
-	nacos.Enroll()
+	////普通
+	//err = rabbitmq.Consumer("2108A_Simple", Take)
+	//if err != nil {
+	//	return
+	//}
 
-	nacos.GetNacosSrv()
+	//广播
+	err = rabbitmq.BroadcastConsumption("2108A_Broadcast", "timeout", Take)
+	if err != nil {
+		return
+	}
+}
+
+func Take(s string) {
+	log.Println(s)
 }

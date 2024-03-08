@@ -64,7 +64,6 @@ func InitNacos() error {
 	}
 
 	return nil
-
 }
 
 func NacosConfig(serverName string) (string, error) {

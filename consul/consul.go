@@ -1,13 +1,16 @@
 package consul
 
 import (
+	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/hashicorp/consul/api"
 	uuid "github.com/satori/go.uuid"
 	"go.uber.org/zap"
 
 	config2 "github.com/zuizaodezaoan/formwork/config"
+	"github.com/zuizaodezaoan/formwork/model"
 )
 
 var (
@@ -16,7 +19,7 @@ var (
 	err          error
 )
 
-func InitRegisterServer() {
+func InitRegisterServer(ctx context.Context, serverName string) (string, error) {
 	//使用默认配置
 	config := api.DefaultConfig()
 
@@ -28,6 +31,26 @@ func InitRegisterServer() {
 
 	if err != nil {
 		zap.S().Panic(err.Error())
+	}
+
+	right, err := model.GetByRight(ctx, serverName, "没有索引")
+	if err != nil {
+		return "", err
+	}
+
+	if right {
+		key, err := model.GetByKey(ctx, serverName, "没有索引")
+		if err != nil {
+			return "", err
+		}
+
+		index, _ := strconv.Atoi(key)
+
+		err = model.GetMessage(ctx, serverName, "没有索引", index+1, 0)
+		if err != nil {
+			return "", err
+		}
+
 	}
 
 	check := &api.AgentServiceCheck{
@@ -52,4 +75,5 @@ func InitRegisterServer() {
 		zap.S().Panic(err.Error())
 	}
 
+	return "", err
 }

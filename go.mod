@@ -15,6 +15,7 @@ require (
 	github.com/redis/go-redis/v9 v9.5.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.18.2
+	github.com/streadway/amqp v1.1.0
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.62.0
 	gorm.io/driver/mysql v1.5.4

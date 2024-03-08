@@ -112,6 +112,7 @@ func _main(args []*string, mobile string, num int) (_err error) {
 			recommend, _ := m["Recommend"]
 			fmt.Println(recommend)
 		}
+
 		_, _err = util.AssertAsString(error.Message)
 		if _err != nil {
 			return _err
@@ -120,10 +121,12 @@ func _main(args []*string, mobile string, num int) (_err error) {
 	return _err
 }
 
-func Mobile(mobile string, num int) {
+func Mobile(mobile string, num int) error {
 	fmt.Println("123")
 	err := _main(tea.StringSlice(os.Args[1:]), mobile, num)
 	if err != nil {
 		panic(err)
 	}
+
+	return nil
 }

@@ -38,7 +38,6 @@ func InitMysql(serverName string) error {
 			Colorful:                  true,        // Disable color
 		},
 	)
-
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
 	})

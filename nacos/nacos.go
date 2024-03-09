@@ -44,8 +44,8 @@ func InitNacos() error {
 
 	serverConfigs := []constant.ServerConfig{
 		{
-			IpAddr: "127.0.0.1",
-			Port:   uint64(8848),
+			IpAddr: "10.2.171.28",
+			Port:   8848,
 		},
 	}
 
@@ -66,7 +66,7 @@ func NacosConfig(serverName string) (string, error) {
 		DataId: "user_srv.g5",
 		Group:  "json"})
 	if err != nil {
-		return "", err
+		return "", errors.New("获取nacos失败" + err.Error())
 	}
 	return content, nil
 }

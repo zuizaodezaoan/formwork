@@ -2,6 +2,7 @@ package nacos
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
@@ -77,5 +78,6 @@ func GetNacosSrv() (string, int, error) {
 		port = int(v.Port)
 
 	}
+	log.Println("Host:========== ", host, port)
 	return host, port, nil
 }

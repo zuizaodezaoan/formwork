@@ -14,7 +14,7 @@ spec:
     spec:
       containers: #定义要在 Pod 中运行的容器列表。
         - name: 2108a-api #指定容器的名称。
-          image: chq030830/2108a_api:v1.1.1 #指定容器的镜像名称。
+          image: chq030830/2108a_api:v1.1.2 #指定容器的镜像名称。
           ports:
             - containerPort: 8882 #指定容器内部监听的端口号
 ---

@@ -1,9 +1,10 @@
 Nacos:
   host: "127.0.0.1"
   port: 8848
-  namespaceId: "785c73e1-7df9-4ed4-ae03-d72b121ebe46"
+  namespaceId: "a2a7cb9f-9fad-4417-bcef-7a3382bac84d"
   logDir: "/tmp/config/log"
   cacheDir: "/tmp/config/cache"
   logLevel: "debug"
-  dataId: "user_srv.g5"
+  dataId: "goods_srv.g5"
   group: "json"
+

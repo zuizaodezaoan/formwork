@@ -35,7 +35,7 @@ var ConfigClient config_client.IConfigClient
 
 func InitNacos() error {
 	clientConfig := constant.ClientConfig{
-		NamespaceId:         "785c73e1-7df9-4ed4-ae03-d72b121ebe46", //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
+		NamespaceId:         "a2a7cb9f-9fad-4417-bcef-7a3382bac84d", //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
 		NotLoadCacheAtStart: true,
 		LogDir:              "/tmp/nacos/log",
 		CacheDir:            "/tmp/nacos/cache",
@@ -63,7 +63,7 @@ func InitNacos() error {
 
 func NacosConfig(serverName string) (string, error) {
 	content, err := ConfigClient.GetConfig(vo.ConfigParam{
-		DataId: "user_srv.g5",
+		DataId: "goods_srv.zg5",
 		Group:  "json"})
 	if err != nil {
 		return "", errors.New("获取nacos失败" + err.Error())

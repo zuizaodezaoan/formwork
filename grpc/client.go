@@ -12,7 +12,7 @@ import (
 )
 
 func RegisterApi(serverName string) (*grpc.ClientConn, error) {
-	server, i, err := consul.GetServer("user_srv.g5")
+	server, i, err := consul.GetServer("goods_srv.zg5")
 	if err != nil {
 		return nil, err
 	}

@@ -47,7 +47,7 @@ func GetByKey(ctx context.Context, serviceName, key string) (string, error) {
 	var data string
 	var err error
 	err = InitRedis(serviceName, func(cli *redis.Client) error {
-		data, err1 := cli.Get(ctx, key).Result()
+		data, err1 := cli.Get(ctx, "login"+key).Result()
 		if err != nil {
 			return err1
 		}

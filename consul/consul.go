@@ -3,6 +3,7 @@ package consul
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 
 	"github.com/hashicorp/consul/api"
@@ -116,4 +117,21 @@ func getHostIp() string {
 		}
 	}
 	return ip
+}
+
+func GetServer(serverName string) (string, int, error) {
+	name, i, _ := ConsulClient.Agent().AgentHealthServiceByName(serverName)
+	if name != "passing" {
+		log.Printf("获取nacos服务发现失败!")
+	}
+
+	var Address string
+	var Port int
+
+	for _, v := range i {
+		Address = v.Service.Address
+		Port = v.Service.Port
+	}
+
+	return Address, Port, nil
 }

@@ -7,10 +7,16 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/zuizaodezaoan/formwork/consul"
 	"github.com/zuizaodezaoan/formwork/nacos"
 )
 
-func RegisterApi(serverName string) (*grpc.ClientConn, error) {
+func RegisterApi() (*grpc.ClientConn, error) {
+	server, i, err := consul.GetServer("user_srv.g5")
+	if err != nil {
+		return nil, err
+	}
+	log.Println("consul连接+++++++++", server, i)
 	//_, err := credentials.NewClientTLSFromFile("./cert.pem", "x.test.example.com")
 	//if err != nil {
 	//	log.Fatalf("failed to load credentials: %v", err)

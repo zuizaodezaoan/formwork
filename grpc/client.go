@@ -11,7 +11,7 @@ import (
 	"github.com/zuizaodezaoan/formwork/nacos"
 )
 
-func RegisterApi() (*grpc.ClientConn, error) {
+func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 	server, i, err := consul.GetServer("user_srv.g5")
 	if err != nil {
 		return nil, err

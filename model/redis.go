@@ -55,9 +55,6 @@ func GetByKey(ctx context.Context, serviceName, key string) (string, error) {
 
 		return nil
 	})
-	if err != nil {
-		return "", err
-	}
 	fmt.Println("12345678", data)
 	return data, nil
 }

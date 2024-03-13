@@ -1,0 +1,32 @@
+apiVersion: apps/v1 #用于指定 API 版本，根据 Kubernetes 版本选择对应的 API 版本
+kind: Deployment #定义对象种类，这里使用 Deployment。metadata.name：指定 Deployment 的名称，自定义为 your-deployment-name
+metadata:
+  name: rpc-deployment-2108a
+spec:
+  replicas: 3 #设定期望的副本数，这里设置为 3。
+  selector:
+    matchLabels: #用于选择要关联的 Pod，这里使用 app: your-app-name
+      app: chq030830
+  template:
+    metadata:
+      labels: #用于定义 Pod 的标签，这里使用 app: your-app-name
+        app: chq030830
+    spec:
+      containers: #定义要在 Pod 中运行的容器列表。
+        - name: 2108a-rpc #指定容器的名称。
+          image: chq030830/2108a_rpc:v1.1.1 #指定容器的镜像名称。
+          ports:
+            - containerPort: 8081 #指定容器内部监听的端口号
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rpc-deployment-2108a
+spec:
+  selector:
+    app: chq030830
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8081
+  type: NodePort

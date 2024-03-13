@@ -19,9 +19,8 @@ func Init(serverName string, str ...string) error {
 		switch val {
 		case "mysql":
 			err = model.InitMysql(serverName)
-		case "redis":
-			err = model.InitRedis(serverName)
 		}
+
 	}
 	return err
 }

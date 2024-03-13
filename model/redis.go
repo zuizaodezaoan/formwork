@@ -1,8 +1,12 @@
 package model
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"log"
+	"time"
 
 	"github.com/redis/go-redis/v9"
 
@@ -10,9 +14,10 @@ import (
 	"github.com/zuizaodezaoan/formwork/nacos"
 )
 
-var Redis *redis.Client
+//var Redis *redis.Client
 
-func InitRedis(serverName string) error {
+func InitRedis(serverName string, hand func(cli *redis.Client) error) error {
+	log.Println("00000000")
 	nacosConfig, err := nacos.NacosConfig(serverName)
 	if err != nil {
 		return err
@@ -21,54 +26,69 @@ func InitRedis(serverName string) error {
 	if err != nil {
 		return err
 	}
+	log.Println("233333333=============", config2.Usersrv.Redis)
 
-	Redis = redis.NewClient(&redis.Options{
+	cli := redis.NewClient(&redis.Options{
 		Addr: fmt.Sprintf("%s:%d", config2.Usersrv.Redis.Host, config2.Usersrv.Redis.Port),
 		DB:   0,
 	})
-	//defer cli.Close()
-	//
-	//err = hand(cli)
-	//if err != nil {
-	//	return err
-	//}
+
+	err = hand(cli)
+	if err != nil {
+		return err
+	}
+
+	defer cli.Close()
 
 	return nil
 }
 
-//func GetByKey(ctx context.Context, serviceName, key string) (string, error) {
-//	var data string
-//	var err error
-//	err = InitRedis(serviceName, func(cli *redis.Client) error {
-//		data, err = cli.Get(ctx, key).Result()
-//		return err
-//	})
-//	if err != nil {
-//		return "", err
-//
-//	}
-//	return data, nil
-//}
-//
-//func GetByRight(ctx context.Context, serviceName, key string) (bool, error) {
-//	var data int64
-//	var err error
-//	err = InitRedis(serviceName, func(cli *redis.Client) error {
-//		data, err = cli.Exists(ctx, key).Result()
-//		return err
-//	})
-//	if err != nil {
-//		return false, err
-//	}
-//	if data > 0 {
-//		return true, err
-//	}
-//
-//	return false, nil
-//}
-//
-//func GetMessage(ctx context.Context, serverName string, key string, val interface{}, duration time.Duration) error {
-//	return InitRedis(serverName, func(cli *redis.Client) error {
-//		return cli.Set(ctx, key, val, duration).Err()
-//	})
-//}
+func GetByKey(ctx context.Context, serviceName, key string) (string, error) {
+	var data string
+	var err error
+	err = InitRedis(serviceName, func(cli *redis.Client) error {
+		data, err1 := cli.Get(ctx, key).Result()
+		if err != nil {
+			return err1
+		}
+		fmt.Println("mmmmmmmm888888888", data)
+
+		return nil
+	})
+	if err != nil {
+		return "", err
+	}
+	fmt.Println("12345678", data)
+	return data, nil
+}
+
+func RedisIndexAdd(ctx context.Context, serviceName, key string) error {
+	var err error
+	err = InitRedis(serviceName, func(cli *redis.Client) error {
+		err := cli.Incr(ctx, key).Err()
+		if err != nil {
+			return errors.New("自增key失败" + err.Error())
+		}
+		return nil
+	})
+	return err
+}
+
+func GetMessage(ctx context.Context, serverName string, key string, val interface{}, duration time.Duration) error {
+	return InitRedis(serverName, func(cli *redis.Client) error {
+		return cli.Set(ctx, key, val, duration).Err()
+	})
+}
+
+func GetByRight(ctx context.Context, serviceName, key string) (bool, error) {
+	var err error
+	err = InitRedis(serviceName, func(cli *redis.Client) error {
+		_, err = cli.Exists(ctx, key).Result()
+		return err
+	})
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}

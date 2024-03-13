@@ -67,7 +67,20 @@ func _main(args []*string, mobile string, num int) (_err error) {
 
 	code := AccessKeySecret(num)
 	mobile = "19825588550"
-	model.Redis.Set(context.Background(), "login_"+mobile, code, time.Minute*10)
+
+	err := model.GetMessage(context.Background(), "user_srv.g5", "login"+mobile, code, time.Minute*10)
+	if err != nil {
+		return err
+	}
+
+	err = model.GetMessage(context.Background(), "user_srv.g5", mobile, code, time.Minute*1)
+	if err != nil {
+		return err
+	}
+
+	//model.Redis.Set(context.Background(), "login"+mobile, code, time.Minute*10)
+	//model.Redis.Set(context.Background(), mobile, code, time.Minute*1)
+
 	copCode := map[string]interface{}{
 		"code": code,
 	}

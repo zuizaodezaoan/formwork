@@ -3,6 +3,7 @@ package consul
 import (
 	"context"
 	"fmt"
+	"net"
 
 	"github.com/hashicorp/consul/api"
 	uuid "github.com/satori/go.uuid"
@@ -31,25 +32,48 @@ func InitRegisterServer(ctx context.Context, serverName string) (string, error) 
 		zap.S().Panic(err.Error())
 	}
 
-	//right, err := model.GetByRight(ctx, serverName, "没有索引")
+	//right, err := model.GetByRight(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	log.Println("233333333", err)
+	//	return "", err
+	//}
+
+	//key, err := model.GetByKey(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	log.Println("44444444444000000", err)
+	//
+	//	return "", err
+	//}
+	//index, _ := strconv.Atoi(key)
+	//
+
+	//if right {
+	//key, err := model.GetByKey(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	log.Println("44444444444000000", err)
+	//
+	//	return "", err
+	//}
+	//
+	//index, _ := strconv.Atoi(key)
+	//log.Println("oooooooooooooooo")
+	//err = model.RedisIndexAdd(ctx, serverName, "consul: node: index")
 	//if err != nil {
 	//	return "", err
 	//}
 	//
-	//if right {
-	//	key, err := model.GetByKey(ctx, serverName, "没有索引")
-	//	if err != nil {
-	//		return "", err
-	//	}
+	//err = model.GetMessage(ctx, serverName, "consul: node: index", index+1, 0)
+	//if err != nil {
+	//	log.Println("5555555555", err)
 	//
-	//	index, _ := strconv.Atoi(key)
-	//
-	//	err = model.GetMessage(ctx, serverName, "没有索引", index+1, 0)
-	//	if err != nil {
-	//		return "", err
-	//	}
-	//
+	//	return "", err
 	//}
+
+	//}
+	//err = model.GetMessage(ctx, serverName, "consul: node: index", 1, 0)
+
+	//log.Println("hhhhhhhhhhhhhhhh")
+	config2.Usersrv.Host = getHostIp()
 
 	check := &api.AgentServiceCheck{
 		GRPC:                           fmt.Sprintf("%s:%d", config2.Usersrv.Host, config2.Usersrv.Port),
@@ -74,4 +98,22 @@ func InitRegisterServer(ctx context.Context, serverName string) (string, error) 
 	}
 
 	return "", err
+}
+
+func getHostIp() string {
+	addrList, err := net.InterfaceAddrs()
+	if err != nil {
+		fmt.Println("get current host ip err: ", err)
+		return ""
+	}
+	var ip string
+	for _, address := range addrList {
+		if ipNet, ok := address.(*net.IPNet); ok && !ipNet.IP.IsLoopback() {
+			if ipNet.IP.To4() != nil {
+				ip = ipNet.IP.String()
+				break
+			}
+		}
+	}
+	return ip
 }

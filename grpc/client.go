@@ -7,7 +7,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	config2 "github.com/zuizaodezaoan/formwork/config"
 	"github.com/zuizaodezaoan/formwork/consul"
 	"github.com/zuizaodezaoan/formwork/nacos"
 )
@@ -29,7 +28,7 @@ func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 	//}
 	//fmt.Println("Registe", config.Usersrv.Host, config.Usersrv.Port)
 
-	server, i, err := consul.GetServer(config2.Usersrv.Mysql.DbName)
+	server, i, err := consul.GetServer(serverName)
 	if err != nil {
 		return nil, err
 	}

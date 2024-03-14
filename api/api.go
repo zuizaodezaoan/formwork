@@ -1,6 +1,9 @@
 package api
 
 import (
+	"context"
+
+	"github.com/zuizaodezaoan/formwork/consul"
 	"github.com/zuizaodezaoan/formwork/model"
 	"github.com/zuizaodezaoan/formwork/nacos"
 )
@@ -10,10 +13,10 @@ func Init(serverName string, str ...string) error {
 	//err = nacos.InitConfig()
 	err = nacos.InitNacos()
 
-	//_, err = consul.InitRegisterServer(context.Background(), "user_srv.g5")
-	//if err != nil {
-	//	return err
-	//}
+	_, err = consul.InitRegisterServer(context.Background(), "user_srv.g5")
+	if err != nil {
+		return err
+	}
 
 	nacos.Enroll()
 

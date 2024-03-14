@@ -12,22 +12,6 @@ import (
 )
 
 func RegisterApi(serverName string) (*grpc.ClientConn, error) {
-	//_, err := credentials.NewClientTLSFromFile("./cert.pem", "x.test.example.com")
-	//if err != nil {
-	//	log.Fatalf("failed to load credentials: %v", err)
-	//	return nil, err
-	//}
-	//nacosConfig, err := nacos.NacosConfig(serverName)
-	//
-	//if err != nil {
-	//	return nil, err
-	//}
-	//err = json.Unmarshal([]byte(nacosConfig), &config.Usersrv)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//fmt.Println("Registe", config.Usersrv.Host, config.Usersrv.Port)
-
 	server, i, err := consul.GetServer(serverName)
 	if err != nil {
 		return nil, err

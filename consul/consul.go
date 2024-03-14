@@ -2,7 +2,6 @@ package consul
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net"
@@ -12,7 +11,6 @@ import (
 	"go.uber.org/zap"
 
 	config2 "github.com/zuizaodezaoan/formwork/config"
-	"github.com/zuizaodezaoan/formwork/nacos"
 )
 
 var (
@@ -24,16 +22,7 @@ var (
 func InitRegisterServer(ctx context.Context, serverName string) (string, error) {
 	//使用默认配置
 	config := api.DefaultConfig()
-	log.Println("连接nacos的配置信息================", config2.Usersrv)
 
-	nacosConfig, err := nacos.NacosConfig("user_srv.g5")
-	if err != nil {
-		return "", err
-	}
-	err = json.Unmarshal([]byte(nacosConfig), &config2.Usersrv)
-	if err != nil {
-		return "", err
-	}
 	//配置consul的连接地址
 	config.Address = fmt.Sprintf("%s:%d", config2.Usersrv.Consul.Host, config2.Usersrv.Consul.Port)
 
@@ -44,7 +33,48 @@ func InitRegisterServer(ctx context.Context, serverName string) (string, error) 
 		zap.S().Panic(err.Error())
 	}
 
-	//config2.Usersrv.Host = getHostIp()
+	//right, err := model.GetByRight(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	log.Println("233333333", err)
+	//	return "", err
+	//}
+
+	//key, err := model.GetByKey(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	log.Println("44444444444000000", err)
+	//
+	//	return "", err
+	//}
+	//index, _ := strconv.Atoi(key)
+	//
+
+	//if right {
+	//key, err := model.GetByKey(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	log.Println("44444444444000000", err)
+	//
+	//	return "", err
+	//}
+	//
+	//index, _ := strconv.Atoi(key)
+	//log.Println("oooooooooooooooo")
+	//err = model.RedisIndexAdd(ctx, serverName, "consul: node: index")
+	//if err != nil {
+	//	return "", err
+	//}
+	//
+	//err = model.GetMessage(ctx, serverName, "consul: node: index", index+1, 0)
+	//if err != nil {
+	//	log.Println("5555555555", err)
+	//
+	//	return "", err
+	//}
+
+	//}
+	//err = model.GetMessage(ctx, serverName, "consul: node: index", 1, 0)
+
+	//log.Println("hhhhhhhhhhhhhhhh")
+	config2.Usersrv.Host = getHostIp()
 
 	check := &api.AgentServiceCheck{
 		GRPC:                           fmt.Sprintf("%s:%d", config2.Usersrv.Host, config2.Usersrv.Port),
@@ -102,6 +132,6 @@ func GetServer(serverName string) (string, int, error) {
 		Address = v.Service.Address
 		Port = v.Service.Port
 	}
-	log.Println("333333322212", Address, Port)
+
 	return Address, Port, nil
 }

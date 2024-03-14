@@ -19,6 +19,7 @@ var DB *gorm.DB
 var err error
 
 func InitMysql(serverName string) error {
+
 	nacosConfig, err := nacos.NacosConfig(serverName)
 	if err != nil {
 		return err

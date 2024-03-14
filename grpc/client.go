@@ -8,6 +8,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/zuizaodezaoan/formwork/consul"
+	"github.com/zuizaodezaoan/formwork/nacos"
 )
 
 func RegisterApi(serverName string) (*grpc.ClientConn, error) {
@@ -27,22 +28,21 @@ func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 	//}
 	//fmt.Println("Registe", config.Usersrv.Host, config.Usersrv.Port)
 
-	//host, port, err := nacos.GetNacosSrv()
-	//if err != nil {
-	//	return nil, err
-	//}
-
-	host, port, err := consul.GetServer("shop")
+	server, i, err := consul.GetServer("shop")
 	if err != nil {
 		return nil, err
 	}
-	log.Println("consul连接+++++++++", host, port)
+	log.Println("consul连接+++++++++", server, i)
 
+	host, port, err := nacos.GetNacosSrv()
+	if err != nil {
+		return nil, err
+	}
 	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", host, port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 		return nil, err
 	}
-	log.Println("consul连接grpc================================")
+
 	return conn, err
 }

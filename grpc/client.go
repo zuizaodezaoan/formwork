@@ -16,7 +16,7 @@ func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Println("consul连接+++++++++", server, i)
+	log.Println("consul连接=============", server, i)
 
 	host, port, err := nacos.GetNacosSrv()
 	if err != nil {

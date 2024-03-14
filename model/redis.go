@@ -26,6 +26,7 @@ func InitRedis(serverName string, hand func(cli *redis.Client) error) error {
 	if err != nil {
 		return err
 	}
+	log.Println("grpc服务================================================================", config2.Usersrv)
 	log.Println("233333333=============", config2.Usersrv.Redis)
 
 	cli := redis.NewClient(&redis.Options{

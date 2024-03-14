@@ -43,6 +43,6 @@ func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 		log.Fatalf("did not connect: %v", err)
 		return nil, err
 	}
-
+	log.Println("consul连接grpc================================")
 	return conn, err
 }

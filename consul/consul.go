@@ -33,47 +33,6 @@ func InitRegisterServer(ctx context.Context, serverName string) (string, error) 
 		zap.S().Panic(err.Error())
 	}
 
-	//right, err := model.GetByRight(ctx, serverName, "consul: node: index")
-	//if err != nil {
-	//	log.Println("233333333", err)
-	//	return "", err
-	//}
-
-	//key, err := model.GetByKey(ctx, serverName, "consul: node: index")
-	//if err != nil {
-	//	log.Println("44444444444000000", err)
-	//
-	//	return "", err
-	//}
-	//index, _ := strconv.Atoi(key)
-	//
-
-	//if right {
-	//key, err := model.GetByKey(ctx, serverName, "consul: node: index")
-	//if err != nil {
-	//	log.Println("44444444444000000", err)
-	//
-	//	return "", err
-	//}
-	//
-	//index, _ := strconv.Atoi(key)
-	//log.Println("oooooooooooooooo")
-	//err = model.RedisIndexAdd(ctx, serverName, "consul: node: index")
-	//if err != nil {
-	//	return "", err
-	//}
-	//
-	//err = model.GetMessage(ctx, serverName, "consul: node: index", index+1, 0)
-	//if err != nil {
-	//	log.Println("5555555555", err)
-	//
-	//	return "", err
-	//}
-
-	//}
-	//err = model.GetMessage(ctx, serverName, "consul: node: index", 1, 0)
-
-	//log.Println("hhhhhhhhhhhhhhhh")
 	config2.Usersrv.Host = getHostIp()
 
 	check := &api.AgentServiceCheck{

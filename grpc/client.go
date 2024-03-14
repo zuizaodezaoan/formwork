@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/mbobakov/grpc-consul-resolver"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/zuizaodezaoan/formwork/consul"
 	"github.com/zuizaodezaoan/formwork/nacos"
@@ -22,11 +22,11 @@ func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 	if err != nil {
 		return nil, err
 	}
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", host, port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	log.Println("54343234543", host, port)
+	conn, err := grpc.Dial(fmt.Sprintf("consul://10.2.171.28:8081/"+serverName+"?wait=14s", grpc.WithInsecure(), grpc.WithDefaultServiceConfig(`{"LoadBalancingPolicy": "round_robin"}`)))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 		return nil, err
 	}
-
 	return conn, err
 }

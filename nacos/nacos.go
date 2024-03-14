@@ -63,7 +63,7 @@ func InitNacos() error {
 
 func NacosConfig(serverName string) (string, error) {
 	content, err := ConfigClient.GetConfig(vo.ConfigParam{
-		DataId: "user_srv.zg5",
+		DataId: "user_srv.g5",
 		Group:  "json"})
 	if err != nil {
 		return "", errors.New("获取nacos失败" + err.Error())

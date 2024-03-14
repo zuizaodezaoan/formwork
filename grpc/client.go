@@ -32,7 +32,7 @@ func RegisterApi(serverName string) (*grpc.ClientConn, error) {
 	//	return nil, err
 	//}
 
-	host, port, err := consul.GetServer(serverName)
+	host, port, err := consul.GetServer("user_srv.g5")
 	if err != nil {
 		return nil, err
 	}

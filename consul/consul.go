@@ -120,7 +120,7 @@ func getHostIp() string {
 }
 
 func GetServer(serverName string) (string, int, error) {
-	name, i, _ := ConsulClient.Agent().AgentHealthServiceByName(serverName)
+	name, i, _ := ConsulClient.Agent().AgentHealthServiceByName(config2.Usersrv.Mysql.DbName)
 	if name != "passing" {
 		log.Printf("获取nacos服务发现失败!")
 	}

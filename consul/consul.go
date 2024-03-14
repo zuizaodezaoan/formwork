@@ -91,6 +91,6 @@ func GetServer(serverName string) (string, int, error) {
 		Address = v.Service.Address
 		Port = v.Service.Port
 	}
-
+	log.Println("333333322212", Address, Port)
 	return Address, Port, nil
 }

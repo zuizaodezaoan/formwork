@@ -10,7 +10,7 @@ func Init(serverName string, str ...string) error {
 	//err = nacos.InitConfig()
 	err = nacos.InitNacos()
 
-	nacos.Enroll()
+	//nacos.Enroll()
 
 	if err != nil {
 		return err

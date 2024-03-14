@@ -42,7 +42,7 @@ func Enroll() {
 	}
 
 	instance, err := Client.RegisterInstance(vo.RegisterInstanceParam{
-		Ip:          "10.2.171.28",
+		Ip:          "192.168.18.94",
 		Port:        8081,
 		ServiceName: "demo.go",
 		GroupName:   "group-a",
